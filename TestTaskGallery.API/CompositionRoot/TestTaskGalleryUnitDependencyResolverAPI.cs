@@ -1,0 +1,75 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+//using Microsoft.Practices.Unity;
+//using System.Web.Http.Dependencies;
+using System.Web.Http;
+using Microsoft.Practices.Unity;
+using System.Web.Http.Dependencies;
+
+
+namespace TestTaskGallery.API.CompositionRoot
+{
+    public class TestTaskGalleryUnitDependencyResolverAPI : IDependencyResolver
+    {
+         protected IUnityContainer container;
+
+         public TestTaskGalleryUnitDependencyResolverAPI(IUnityContainer container)
+    {
+        if (container == null)
+        {
+            throw new ArgumentNullException("container");
+        }
+        this.container = container;
+    }
+
+    public object GetService(Type serviceType)
+    {
+        try
+        {
+            return container.Resolve(serviceType);
+        }
+        catch (ResolutionFailedException)
+        {
+            return null;
+        }
+    }
+
+    public IEnumerable<object> GetServices(Type serviceType)
+    {
+        try
+        {
+            return container.ResolveAll(serviceType);
+        }
+        catch (ResolutionFailedException)
+        {
+            return new List<object>();
+        }
+    }
+
+    public IDependencyScope BeginScope()
+    {
+        var child = container.CreateChildContainer();
+        return new TestTaskGalleryUnitDependencyResolverAPI(child);
+    }
+    //public static void Register(HttpConfiguration config)
+    //{
+    //    var container = new UnityContainer();
+    //    container.RegisterType<Core.Repositories.IUploadFileRepository, TestTaskGallery.DataAccess.Repositories.UploadFileRepository>();
+    //    config.DependencyResolver = new TestTaskGalleryUnitDependencyResolverAPI(container);
+
+    //    // Other Web API configuration not shown.
+    //}
+
+    public void Dispose()
+    {
+        Dispose(true);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        container.Dispose();
+    }
+    }
+}

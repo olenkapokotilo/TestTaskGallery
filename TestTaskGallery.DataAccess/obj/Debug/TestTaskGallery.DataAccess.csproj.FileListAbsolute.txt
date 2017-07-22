@@ -1,0 +1,14 @@
+F:\TestTaskGallery\TestTaskGallery.DataAccess\bin\Debug\TestTaskGallery.DataAccess.dll.config
+F:\TestTaskGallery\TestTaskGallery.DataAccess\bin\Debug\TestTaskGallery.DataAccess.dll
+F:\TestTaskGallery\TestTaskGallery.DataAccess\bin\Debug\TestTaskGallery.DataAccess.pdb
+F:\TestTaskGallery\TestTaskGallery.DataAccess\bin\Debug\AutoMapper.dll
+F:\TestTaskGallery\TestTaskGallery.DataAccess\bin\Debug\EntityFramework.dll
+F:\TestTaskGallery\TestTaskGallery.DataAccess\bin\Debug\EntityFramework.SqlServer.dll
+F:\TestTaskGallery\TestTaskGallery.DataAccess\bin\Debug\TestTaskGallery.Core.dll
+F:\TestTaskGallery\TestTaskGallery.DataAccess\bin\Debug\TestTaskGallery.Core.pdb
+F:\TestTaskGallery\TestTaskGallery.DataAccess\bin\Debug\AutoMapper.xml
+F:\TestTaskGallery\TestTaskGallery.DataAccess\bin\Debug\EntityFramework.xml
+F:\TestTaskGallery\TestTaskGallery.DataAccess\bin\Debug\EntityFramework.SqlServer.xml
+F:\TestTaskGallery\TestTaskGallery.DataAccess\obj\Debug\TestTaskGallery.DataAccess.csprojResolveAssemblyReference.cache
+F:\TestTaskGallery\TestTaskGallery.DataAccess\obj\Debug\TestTaskGallery.DataAccess.dll
+F:\TestTaskGallery\TestTaskGallery.DataAccess\obj\Debug\TestTaskGallery.DataAccess.pdb

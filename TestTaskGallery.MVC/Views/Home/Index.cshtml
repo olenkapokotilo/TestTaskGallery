@@ -1,0 +1,37 @@
+﻿@model IEnumerable<TestTaskGallery.MVC.Models.UserModel>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2>Index</h2>
+@*<div ng-controller="HomeController">
+    {{Message}}
+</div>*@
+<div ng-controller="HomeController" ng-init="GetAllData()" >
+    <p>List of Users</p>
+    <h1>{{myWelcome}}</h1>
+    <table ng-cloak>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="items in productsData">
+            <td>{{items.Id}}</td>
+            <td>{{items.Name}}</td>
+                <@*td>{{items.UploadFiles.}}</td>*@
+        </tbody>
+    </table>
+</div>
+<div >
+    <form enctype="multipart/form-data" action="Home/Upload" method="POST">
+        <input type="file" id="f" 
+               file-input="files"
+            @*onchange="angular.element('[ng-controller=HomeController]').scope().filesChanged(this)"*@ 
+               multiple />
+        <button ng-click="upload()">Add</button>
+        <li ng-repeat="file in files">{{file.name}}</li>
+    </form>
+</div>
