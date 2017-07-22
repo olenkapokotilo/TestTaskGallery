@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTaskGallery.DataAccess"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTaskGallery.API", "TestTaskGallery.API\TestTaskGallery.API.csproj", "{FC52BCF9-9FC2-492C-9FC7-998B9C932161}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTaskGallery.Tests", "TestTaskGallery.Tests\TestTaskGallery.Tests.csproj", "{ECA77997-B7F6-4BFF-8B87-73802AD252DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{FC52BCF9-9FC2-492C-9FC7-998B9C932161}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC52BCF9-9FC2-492C-9FC7-998B9C932161}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC52BCF9-9FC2-492C-9FC7-998B9C932161}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECA77997-B7F6-4BFF-8B87-73802AD252DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECA77997-B7F6-4BFF-8B87-73802AD252DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECA77997-B7F6-4BFF-8B87-73802AD252DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECA77997-B7F6-4BFF-8B87-73802AD252DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
