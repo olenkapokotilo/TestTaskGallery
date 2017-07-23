@@ -10,3 +10,4 @@ F:\TestTaskGallery\TestTaskGallery.Core\bin\Debug\EntityFramework.dll
 F:\TestTaskGallery\TestTaskGallery.Core\bin\Debug\EntityFramework.xml
 F:\TestTaskGallery\TestTaskGallery.Core\obj\Debug\TestTaskGallery.Core.dll
 F:\TestTaskGallery\TestTaskGallery.Core\obj\Debug\TestTaskGallery.Core.pdb
+F:\TestTaskGallery\TestTaskGallery.Core\obj\Debug\TestTaskGallery.Core.csprojResolveAssemblyReference.cache

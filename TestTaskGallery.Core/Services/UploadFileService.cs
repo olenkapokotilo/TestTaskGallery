@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,10 @@ namespace TestTaskGallery.Core.Services
 
         public Result SavePicture(HttpPostedFileBase httpPostedFile, int usesrId)
         {
+            var name = usesrId + "_" + Guid.NewGuid() + "_" + httpPostedFile.FileName;
+            var path = HttpContext.Current.Server.MapPath("~/App_Data/" + name);
+            httpPostedFile.SaveAs(path);
+
             byte[] file2 = new byte[httpPostedFile.InputStream.Length];
             httpPostedFile.InputStream.Read(file2, 0, (int)httpPostedFile.InputStream.Length);
             //await httpPostedFile.InputStream.ReadAsync(file2, 0, (int)httpPostedFile.InputStream.Length);

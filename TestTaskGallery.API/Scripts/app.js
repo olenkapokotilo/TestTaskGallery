@@ -45,15 +45,12 @@
         $scope.upload = function () {
             var fd = new FormData();
             fd.append('userId', $scope.currentUserId);
-            fd.append('file', $scope.file);
-            
-            
+            fd.append('file', $scope.file);            
             $http.post('api/values', fd,
             {
-                transformRequest: angular.indentity,
-                headers: { 'Content-Type': undefined }
-            })
-                .then(function (d) {
+                headers: { 'Content-Type': undefined },
+                transformRequest: angular.indentity
+            }).then(function (d) {
                     angular.forEach(d.data, function (file, key) {
                         $scope.productsData.find(function (el) { return el.Id == file.UserId; }).UploadFiles.push(file);
 
