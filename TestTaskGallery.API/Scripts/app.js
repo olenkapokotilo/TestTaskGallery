@@ -24,8 +24,8 @@
             });
         });
     
-        $scope.filesChanged = function (elm) {
-            $scope.filesChanged = elm.files;
+        $scope.fileChanged = function (elm) {
+            $scope.fileChanged = elm.file;
             $scope.$apply();
         };
 
@@ -44,11 +44,10 @@
         }
         $scope.upload = function () {
             var fd = new FormData();
-            //fd.append('userId', 1);
-            angular.forEach($scope.files, function (file, key) {
-                fd.append('file'+key, file);
+            fd.append('userId', $scope.currentUserId);
+            fd.append('file', $scope.file);
             
-            });
+            
             $http.post('api/values', fd,
             {
                 transformRequest: angular.indentity,
@@ -64,6 +63,7 @@
         }
 
         $scope.uploadUserFiles = function(id) {
+            $scope.currentUserId = id;
             $scope.allFilesForUser = $scope.productsData.find(function (el, index) { return el.Id == id; });
         }
 
@@ -102,7 +102,7 @@ app.directive('fileInput', ['$parse', function ($parse) {
         link: function (scope, elm, attrs) {
             elm.bind('change', function () {
                 $parse(attrs.fileInput)
-                    .assign(scope, elm[0].files);
+                    .assign(scope, elm[0].files[0]);
                 scope.$apply();
             });
         }

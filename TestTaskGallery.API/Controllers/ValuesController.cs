@@ -10,14 +10,16 @@ using System.Web.Http;
 using AutoMapper;
 using TestTaskGallery.API.Mapper;
 using TestTaskGallery.API.Models;
+using TestTaskGallery.Core.Entities;
 using TestTaskGallery.Core.Repositories;
+using TestTaskGallery.Core.Services.Interfaces;
 
 namespace TestTaskGallery.API.Controllers
 {
     public class ValuesController : ApiController
     {
+        private IUploadFileService _uploadFileService;
         private IUserRepository _userRepository;
-        private IUploadFileRepository _uploadFileRepository;
 
         private IMapper _mapper = null;
         protected IMapper Mapper
@@ -28,10 +30,10 @@ namespace TestTaskGallery.API.Controllers
                 return _mapper;
             }
         }
-        public ValuesController(IUserRepository userRepository, IUploadFileRepository uploadFileRepository)
+        public ValuesController(IUploadFileService uploadFileService, IUserRepository userRepository)
         {
+            _uploadFileService = uploadFileService;
             _userRepository = userRepository;
-            _uploadFileRepository = uploadFileRepository;
         }
         // GET api/values
         [Route("api/users")]
@@ -41,41 +43,14 @@ namespace TestTaskGallery.API.Controllers
             return res;
         }
 
-
-
-        // GET api/values/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST api/values
-        public async Task<IEnumerable<UploadFileModel>> Post()
+        public Result Post()
         {
-            var list = new List<UploadFileModel>();
-            if (!Request.Content.IsMimeMultipartContent())
-            {
-                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
-            }
-
-            foreach (var file in HttpContext.Current.Request.Files.AllKeys)
-            {
-                var httpPostedFile = HttpContext.Current.Request.Files[file];
-                byte[] file2 = new byte[httpPostedFile.InputStream.Length];
-                await httpPostedFile.InputStream.ReadAsync(file2, 0, (int)httpPostedFile.InputStream.Length);
-
-
-                var upfile = new UploadFileModel { Photo = file2, UserId = 1 };
-                var result = _uploadFileRepository.SaveFile(Mapper.Map<Core.Entities.UploadFile>(upfile));
-                list.Add(Mapper.Map<UploadFileModel>(result));
-            }
-            
-            return list;
-            
-            
+                var httpPostedFile = HttpContext.Current.Request.Files["file"];
+                var result = _uploadFileService.SavePicture(new HttpPostedFileWrapper(httpPostedFile), 1);
+            return result;
         }
-
-
+           
         // PUT api/values/5
         [Route("api/addUser")]
         [HttpPost]
@@ -90,7 +65,7 @@ namespace TestTaskGallery.API.Controllers
         [HttpDelete]
         public void PhotoDelete(int id)
         {
-            _uploadFileRepository.DeleteFile(id);
+            //_uploadFileRepository.DeleteFile(id);
         }
     }
 }

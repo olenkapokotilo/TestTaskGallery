@@ -53,15 +53,7 @@ namespace TestTaskGallery.API.CompositionRoot
         var child = container.CreateChildContainer();
         return new TestTaskGalleryUnitDependencyResolverAPI(child);
     }
-    //public static void Register(HttpConfiguration config)
-    //{
-    //    var container = new UnityContainer();
-    //    container.RegisterType<Core.Repositories.IUploadFileRepository, TestTaskGallery.DataAccess.Repositories.UploadFileRepository>();
-    //    config.DependencyResolver = new TestTaskGalleryUnitDependencyResolverAPI(container);
-
-    //    // Other Web API configuration not shown.
-    //}
-
+   
     public void Dispose()
     {
         Dispose(true);
