@@ -13,6 +13,7 @@ namespace TestTaskGallery.Core.Services
 {
     public class UploadFileService : IUploadFileService
     {
+        private string[] _allowedExtentions;
         private IUploadFileRepository _uploadFileRepository;
         private IFileSystemPathService _fileSystemPathService;
 
@@ -20,20 +21,29 @@ namespace TestTaskGallery.Core.Services
         {
             _uploadFileRepository = uploadFileRepository;
             _fileSystemPathService = fileSystemPathService;
+            _allowedExtentions = new string[] { ".png", ".gif", ".jpg"};
         }
 
         public Result SavePicture(HttpPostedFileBase httpPostedFile, int usesrId)
         {
-            var name = usesrId + "_" + Guid.NewGuid() + "_" + httpPostedFile.FileName;
-            var path = HttpContext.Current.Server.MapPath("~/App_Data/" + name);
-            httpPostedFile.SaveAs(path);
+            if (!_allowedExtentions.Any(httpPostedFile.FileName.Contains))
+                return new Result {Message = "Only picture allowed.", Status = "Error"};
 
-            byte[] file2 = new byte[httpPostedFile.InputStream.Length];
-            httpPostedFile.InputStream.Read(file2, 0, (int)httpPostedFile.InputStream.Length);
-            //await httpPostedFile.InputStream.ReadAsync(file2, 0, (int)httpPostedFile.InputStream.Length);
-            var upfile = new UploadFile { Photo = file2, UserId = 1 };
-            _uploadFileRepository.SaveFile(upfile);
-            return new Result { Message = "Only picture allowed.", Status = "Success" };
+            var name = usesrId + "_" + Guid.NewGuid() + "_" + httpPostedFile.FileName;
+            var path = _fileSystemPathService.GetImageSavePath() + name;
+            var uploudfile = new UploadFile { Name = name, UserId = 1 };
+            var photo = (UploadFile)_uploadFileRepository.SaveFile(uploudfile);
+            try
+            {
+                httpPostedFile.SaveAs(path); 
+            }
+            catch (Exception e)
+            {
+                _uploadFileRepository.DeleteFile(photo.Id);
+                return new Result { Message = "Error: ."+e.Message, Status = "Error"};
+            }
+           
+            return new Result { Message = "Saved.", Status = "Success", Photo = (UploadFile)photo };
         }
     }
 }

@@ -11,7 +11,7 @@ namespace TestTaskGallery.API.Models
     {
         public int Id { get; set; }
 
-        public byte[] Photo { get; set; }
+        public string Name { get; set; }
         public Nullable<int> UserId { get; set; }
 
         [JsonIgnore]

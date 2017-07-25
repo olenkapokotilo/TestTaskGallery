@@ -22,6 +22,16 @@ namespace TestTaskGallery.DataAccess.Repositories
                 return _mapper;
             }
         }
+
+        public Core.Entities.UploadFile GetNameById(int id)
+        {
+            using (var context = new TestTaskGalleryContext())
+            {
+                var result = context.UploadFiles.Where(f => f.Id ==id).SingleOrDefault();
+                return Mapper.Map<Core.Entities.UploadFile>(result);
+            }
+        }
+
         public object SaveFile(TestTaskGallery.Core.Entities.UploadFile file)
         {
             using (var context = new TestTaskGalleryContext())

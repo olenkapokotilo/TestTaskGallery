@@ -20,6 +20,7 @@ namespace TestTaskGallery.API.Controllers
     {
         private IUploadFileService _uploadFileService;
         private IUserRepository _userRepository;
+        private IUploadFileRepository _uploadFileRepository;
 
         private IMapper _mapper = null;
         protected IMapper Mapper
@@ -30,23 +31,34 @@ namespace TestTaskGallery.API.Controllers
                 return _mapper;
             }
         }
-        public ValuesController(IUploadFileService uploadFileService, IUserRepository userRepository)
+        public ValuesController(IUploadFileService uploadFileService, IUserRepository userRepository, IUploadFileRepository uploadFileRepository)
         {
             _uploadFileService = uploadFileService;
             _userRepository = userRepository;
+            _uploadFileRepository = uploadFileRepository;
         }
         // GET api/values
         [Route("api/users")]
+        [HttpGet]
         public IEnumerable<Core.Entities.User> Get()
         {
             var res = _userRepository.GetAllUsers();
             return res;
         }
 
+        [Route("api/photos")]
+        [HttpGet]
+        public byte[] Get(int fileId)
+        {
+            var file = _uploadFileRepository.GetNameById(fileId);
+            var result = File.ReadAllBytes(System.Web.Hosting.HostingEnvironment.MapPath("~/App_Data") + file.Name);
+            return result;
+        }
+
         // POST api/values
         public Result Post()
         {
-                var httpPostedFile = HttpContext.Current.Request.Files["file"];
+                var httpPostedFile = HttpContext.Current.Request.Files["file"]; // ? "file" const
                 var result = _uploadFileService.SavePicture(new HttpPostedFileWrapper(httpPostedFile), 1);
             return result;
         }
@@ -65,7 +77,7 @@ namespace TestTaskGallery.API.Controllers
         [HttpDelete]
         public void PhotoDelete(int id)
         {
-            //_uploadFileRepository.DeleteFile(id);
+            _uploadFileRepository.DeleteFile(id);
         }
     }
 }

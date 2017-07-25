@@ -9,8 +9,7 @@ namespace TestTaskGallery.Core.Entities
     public class UploadFile
     {
         public int Id { get; set; }
-
-        public byte[] Photo { get; set; }
+        public string Name { get; set; }
         public Nullable<int> UserId { get; set; }
         public User User { get; set; }
     }

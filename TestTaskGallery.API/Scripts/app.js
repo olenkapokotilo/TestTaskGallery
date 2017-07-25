@@ -12,11 +12,12 @@
         $scope.pageSize = 3;
         $scope.productsData = [];
         $scope.allFilesForUser = [];
+
         $scope.numberOfPages = function () {
             return Math.ceil($scope.productsData.length / $scope.pageSize);
         }
 
-        PhotoService.asyncGetData().then(function (d) {
+        PhotoService.asyncGeUsers().then(function (d) {
             $scope.productsData = d;
             
             angular.forEach($scope.productsData, function(user) {
@@ -42,33 +43,43 @@
                     $scope.BirthDate = '';
                 });
         }
+
         $scope.upload = function () {
             var fd = new FormData();
-            fd.append('userId', $scope.currentUserId);
+            fd.append('userId', $scope.currentUser.Id);
             fd.append('file', $scope.file);            
             $http.post('api/values', fd,
             {
                 headers: { 'Content-Type': undefined },
                 transformRequest: angular.indentity
             }).then(function (d) {
-                    angular.forEach(d.data, function (file, key) {
-                        $scope.productsData.find(function (el) { return el.Id == file.UserId; }).UploadFiles.push(file);
-
-                    });
-                    
+                var newPhoto = d.data.Photo;
+                PhotoService.asyncGePhotos(d.data.Photo.Id).then(function (d) {
+                    newPhoto.bytes = d;
+                    $scope.currentUser.UploadFiles.push(newPhoto);
+                });
                 });
         }
 
         $scope.uploadUserFiles = function(id) {
-            $scope.currentUserId = id;
-            $scope.allFilesForUser = $scope.productsData.find(function (el, index) { return el.Id == id; });
+            $scope.currentUser = $scope.productsData.find(function (el) { return el.Id == id; });
+           angular.forEach($scope.currentUser.UploadFiles, function (file) {
+                PhotoService.asyncGePhotos(file.Id).then(function (d) {
+                    $scope.currentUser.UploadFiles.find(function (el) { return el.Id == id; }).bytes = d;
+                });
+            });
+           
+
+            
         }
 
         $scope.deletePhoto = function (id, index) {
             $http.delete('api/deletePhoto', { params: { 'id': id } })
                 .then(function (d) {
-                    $scope.allFilesForUser.UploadFiles.splice(index, 1);
-                });
+                    $scope.currentUser.UploadFiles.splice(index, 1);
+                $scope.productsData.find(function(el) { return el.Id == $scope.currentUser.Id; }).UploadFiles = $scope.currentUser.UploadFiles;
+                // ? delete from user.List
+            });
         }
     };
 
@@ -77,15 +88,30 @@
  function PhotoService( $http,$q) {
         var service = this;
 
-        service.asyncGetData = function() {
+        service.asyncGeUsers = function() {
             var deferred = $q.defer();
-            $http.get('api/users').
+            $http.get('../api/users').
                 then(function success(response) {
                         deferred.resolve(response.data);
                     }, function error(response) {
                         deferred.reject(response.status);
                     }
                 );
+
+            return deferred.promise;
+        }
+
+        service.asyncGePhotos = function (userId) {
+            var config = {
+                params: { 'fileId': userId }
+            };
+            var deferred = $q.defer();
+            $http.get('api/photos', config).
+                then(function success(response) {
+                    deferred.resolve(response.data);
+                }, function error(response) {
+                    deferred.reject(response.status);
+                });
 
             return deferred.promise;
         }
@@ -112,33 +138,4 @@ app.filter('startFrom', function () {
         return input.slice(start);
     }
 });
-
-
-
-
-//app.factory('ProductsService', function ($http) {
-//    var fac = {};
-//    fac.GetAllRecords = function () {
-//        return $http.get('api/users');
-//    }
-//    return fac;
-//});
-
-
-//app.factory('dataService', function($http, $q) {
-//    return {
-//        asyncGetData: function () {
-//            var deferred = $q.defer();
-//            $http.get('api/users').
-//                then(function success(response) {
-//                        deferred.resolve(response.data);
-//                    }, function error(response) {
-//                        deferred.reject(response.status);
-//                    }
-//                );
-
-//            return deferred.promise;
-//        }
-//    }
-//});
 })();

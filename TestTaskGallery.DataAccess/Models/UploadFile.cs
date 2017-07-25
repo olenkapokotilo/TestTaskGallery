@@ -10,7 +10,7 @@ namespace TestTaskGallery.DataAccess.Models
     {
         public int Id { get; set; }
 
-        public byte[] Photo { get; set; }
+        public string Name { get; set; }
 
         public Nullable<int> UserId { get; set; }
         public virtual User User { get; set; }

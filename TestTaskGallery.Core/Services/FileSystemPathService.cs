@@ -9,9 +9,11 @@ namespace TestTaskGallery.Core.Services
 {
     public class FileSystemPathService : IFileSystemPathService
     {
+
+        const string path = "~/App_Data";
         public string GetImageSavePath()
         {
-            throw new NotImplementedException();
+            return System.Web.Hosting.HostingEnvironment.MapPath(path);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,16 @@ namespace TestTaskGallery.DataAccess.Repositories
             {
                 var users = context.Users.ToList();
                 var result = Mapper.Map<IEnumerable<User>>(users);
+                return result;
+            }
+        }
+
+        public User GetById(int id)
+        {
+            using (var context = new TestTaskGalleryContext())
+            {
+                var user = context.Users.Where(u=>u.Id == id).SingleOrDefault();
+                var result = Mapper.Map<User>(user);
                 return result;
             }
         }

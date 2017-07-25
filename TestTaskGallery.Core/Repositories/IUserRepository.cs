@@ -10,6 +10,7 @@ namespace TestTaskGallery.Core.Repositories
     public interface IUserRepository
     {
         IEnumerable<User> GetAllUsers();
+        User GetById(int id);
 
         User Add(User user);
     }
