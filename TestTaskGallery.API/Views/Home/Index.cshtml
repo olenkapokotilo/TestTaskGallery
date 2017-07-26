@@ -1,4 +1,5 @@
 ﻿<div class="container" ng-controller="HomeController as main">
+    <ng-view></ng-view>
     <div class="row">
         <div class="col-lg-6 form-inline">
             <form>
@@ -27,7 +28,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="item in usersData | startFrom:currentPage*pageSize | limitTo:pageSize ">
-                        <td><a ng-click="uploadUserFiles(item.Id)">{{item.Name}}</a></td>
+                        <td><a href="#!files" ng-click="uploadUserFiles(item.Id)" >{{item.Name}}</a></td>
                         <td>{{item.BirthDate}}</td>
                         <td>{{item.UploadFiles.length}}</td>
                     </tr>
@@ -42,7 +43,7 @@
             </button>
         </div>
     </div>
-    <div class="row" id="photos">
+    @*<div class="row" id="photos">
         <div class="col-lg-3 ">
             <form>
                 <input type="file"
@@ -57,5 +58,5 @@
 
             <button type="button" class="close" aria-label="Close" ng-click="deletePhoto(photo.Name, $index)"><span aria-hidden="true">&times;</span></button>
         </div>
-    </div>
+    </div>*@
 </div>

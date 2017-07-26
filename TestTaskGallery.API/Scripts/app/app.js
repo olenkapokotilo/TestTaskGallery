@@ -1,9 +1,23 @@
 ﻿(function () {
     "use strict";
 
- var app=   angular.module('app', [])
+    var app = angular.module('app', ["ngRoute"])
         .controller('HomeController', HomeController) 
         .service('FileService', FileService);
+
+    app.config(function($routeProvider) {
+        $routeProvider.when('/users',
+        {
+            templateUrl: 'views/question.html',
+            controller: 'HomeController'
+        });
+        $routeProvider.when('/files',
+        {
+            templateUrl: 'home/files',
+            controller: 'HomeController'
+        });
+    });
+
 
  HomeController.$inject = ['$scope', '$http', '$q', '$filter', 'FileService'];
 

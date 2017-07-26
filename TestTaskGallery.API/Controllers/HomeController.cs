@@ -14,5 +14,10 @@ namespace TestTaskGallery.API.Controllers
 
             return View();
         }
+
+        public ActionResult Files()
+        {
+            return View();
+        }
     }
 }

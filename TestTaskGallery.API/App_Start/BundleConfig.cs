@@ -20,7 +20,7 @@ namespace TestTaskGallery.API
                      "~/Scripts/angular.js",
                      "~/Scripts/angular-route.js",
                      "~/Scripts/moment.js",
-                     "~/Scripts/app.js"));
+                     "~/Scripts/app/app.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
