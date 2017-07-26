@@ -1,16 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using AutoMapper;
+﻿using AutoMapper;
+using TestTaskGallery.Core;
 
 namespace TestTaskGallery.API
 {
-    public class MapperConfig
+    public static class MapperConfig
     {
-        public static MapperConfiguration GetConfiguration()
+        public static void RegisterMappings()
         {
-            return new MapperConfiguration(_ => _.AddProfile(new MapperProfile()));
+            var config = new MapperConfiguration(c =>
+            {
+                c.AddProfile(new MapperProfile());
+                c.AddProfile(new DataAccess.MapperProfile());
+            });
+            config.AssertConfigurationIsValid();
+            Map.UseConfiguration(config);
         }
     }
 

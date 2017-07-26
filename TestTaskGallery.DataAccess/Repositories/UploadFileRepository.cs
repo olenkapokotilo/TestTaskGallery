@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using TestTaskGallery.Core;
 using TestTaskGallery.Core.Repositories;
 using TestTaskGallery.DataAccess.Models;
 
@@ -17,7 +18,7 @@ namespace TestTaskGallery.DataAccess.Repositories
             using (var context = new TestTaskGalleryContext())
             {
                 var result = context.UploadFiles.SingleOrDefault(f => f.Id ==id);
-                return Mapper.Map<Core.Entities.UploadFile>(result);
+                return Map.Mapper.Map<Core.Entities.UploadFile>(result);
             }
         }
 
@@ -25,9 +26,9 @@ namespace TestTaskGallery.DataAccess.Repositories
         {
             using (var context = new TestTaskGalleryContext())
             {
-                var result = context.UploadFiles.Add(Mapper.Map<UploadFile>(file));
+                var result = context.UploadFiles.Add(Map.Mapper.Map<UploadFile>(file));
                 context.SaveChanges();
-                return Mapper.Map<Core.Entities.UploadFile>(result);
+                return Map.Mapper.Map<Core.Entities.UploadFile>(result);
             }
             
         }

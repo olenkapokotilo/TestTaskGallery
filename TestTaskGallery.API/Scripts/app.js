@@ -3,24 +3,24 @@
 
  var app=   angular.module('app', [])
         .controller('HomeController', HomeController) 
-        .service('PhotoService', PhotoService);
+        .service('FileService', FileService);
 
- HomeController.$inject = ['$scope', '$http', '$q', '$filter', 'PhotoService'];
+ HomeController.$inject = ['$scope', '$http', '$q', '$filter', 'FileService'];
 
- function HomeController($scope, $http, $filter, $q, PhotoService) {
+ function HomeController($scope, $http, $filter, $q, FileService) {
         $scope.currentPage = 0;
         $scope.pageSize = 3;
-        $scope.productsData = [];
+        $scope.usersData = [];
         $scope.allFilesForUser = [];
 
         $scope.numberOfPages = function () {
-            return Math.ceil($scope.productsData.length / $scope.pageSize);
+            return Math.ceil($scope.usersData.length / $scope.pageSize);
         }
 
-        PhotoService.asyncGeUsers().then(function (d) {
-            $scope.productsData = d;
+        FileService.asyncGeUsers().then(function (d) {
+            $scope.usersData = d;
             
-            angular.forEach($scope.productsData, function(user) {
+            angular.forEach($scope.usersData, function (user) {
                 user.BirthDate = moment(user.BirthDate).format('YYYY-DD-MM');
             });
         });
@@ -36,7 +36,7 @@
                 BirthDate: $scope.BirthDate}
             ).then(function (d) {
                 d.data.BirthDate = moment(d.data.BirthDate).format('YYYY-DD-MM');
-                $scope.productsData.push(d.data);
+                $scope.usersData.push(d.data);
                 
                 
                 $scope.Name = '';
@@ -54,7 +54,7 @@
                 transformRequest: angular.indentity
             }).then(function (d) {
                 var newPhoto = d.data.Photo;
-                PhotoService.asyncGePhotos(d.data.Photo.Id).then(function (d) {
+                FileService.asyncGePhotos(d.data.Photo.Id).then(function (d) {
                     newPhoto.bytes = d;
                     $scope.currentUser.UploadFiles.push(newPhoto);
                 });
@@ -62,30 +62,27 @@
         }
 
         $scope.uploadUserFiles = function(id) {
-            $scope.currentUser = $scope.productsData.find(function (el) { return el.Id == id; });
+            $scope.currentUser = $scope.usersData.find(function (el) { return el.Id == id; });
            angular.forEach($scope.currentUser.UploadFiles, function (file) {
                 PhotoService.asyncGePhotos(file.Id).then(function (d) {
                     $scope.currentUser.UploadFiles.find(function (el) { return el.Id == id; }).bytes = d;
                 });
             });
-           
-
-            
-        }
+           }
 
         $scope.deletePhoto = function (id, index) {
             $http.delete('api/deletePhoto', { params: { 'fileName': id } })
                 .then(function (d) {
                     $scope.currentUser.UploadFiles.splice(index, 1);
-                $scope.productsData.find(function(el) { return el.Id == $scope.currentUser.Id; }).UploadFiles = $scope.currentUser.UploadFiles;
+                    $scope.usersData.find(function (el) { return el.Id == $scope.currentUser.Id; }).UploadFiles = $scope.currentUser.UploadFiles;
                 // ? delete from user.List
             });
         }
     };
 
- PhotoService.$inject = ['$http','$q'];
+ FileService.$inject = ['$http', '$q'];
 
- function PhotoService( $http,$q) {
+ function FileService($http, $q) {
         var service = this;
 
         service.asyncGeUsers = function() {
@@ -116,8 +113,6 @@
             return deferred.promise;
         }
     }
-
- 
 
 app.directive('fileInput', ['$parse', function ($parse) {
     return {

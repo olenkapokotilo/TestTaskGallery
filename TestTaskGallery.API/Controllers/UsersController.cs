@@ -5,8 +5,8 @@ using System.Net;
 using System.Net.Http;
 using AutoMapper;
 using System.Web.Http;
-using TestTaskGallery.API.Mapper;
 using TestTaskGallery.API.Models;
+using TestTaskGallery.Core;
 using TestTaskGallery.Core.Repositories;
 
 namespace TestTaskGallery.API.Controllers

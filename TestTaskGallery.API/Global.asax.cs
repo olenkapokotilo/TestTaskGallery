@@ -13,20 +13,18 @@ namespace TestTaskGallery.API
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
-        internal static MapperConfiguration MapperConfigurationAPI { get; private set; }
-        internal static MapperConfiguration MapperConfigurationDA { get; private set; }
+        
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            MapperConfigurationAPI = MapperConfig.GetConfiguration();
-            MapperConfigurationDA = DataAccess.Startup.MapperConfig.GetConfiguration();
+
+            //MapperConfig.RegisterMappings();
+            //DataAccess.MapperConfig.RegisterMappings();
+
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            MapperConfigurationAPI.AssertConfigurationIsValid();
-            MapperConfigurationDA.AssertConfigurationIsValid();
         }
     }
 }

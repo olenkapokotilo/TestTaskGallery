@@ -8,7 +8,6 @@ using AutoMapper;
 using TestTaskGallery.Core;
 using TestTaskGallery.Core.Repositories;
 using TestTaskGallery.DataAccess.Models;
-using TestTaskGallery.DataAccess.Startup;
 using CoreEntities = TestTaskGallery.Core.Entities;
 
 namespace TestTaskGallery.DataAccess.Repositories
@@ -20,7 +19,7 @@ namespace TestTaskGallery.DataAccess.Repositories
             using (var context = new TestTaskGalleryContext())
             {
                 var users = context.Users.ToList();
-                var result = Mapper.Map<IEnumerable<CoreEntities.User>>(users);
+                var result = Map.Mapper.Map<IEnumerable<CoreEntities.User>>(users);
                 return result;
             }
         }
@@ -30,7 +29,7 @@ namespace TestTaskGallery.DataAccess.Repositories
             using (var context = new TestTaskGalleryContext())
             {
                 var user = context.Users.SingleOrDefault(u => u.Id == id);
-                var result = Mapper.Map<CoreEntities.User>(user);
+                var result = Map.Mapper.Map<CoreEntities.User>(user);
                 return result;
             }
         }
@@ -39,9 +38,9 @@ namespace TestTaskGallery.DataAccess.Repositories
         {
             using (var context = new TestTaskGalleryContext())
             {
-                var res = context.Users.Add(Mapper.Map<User>(user));
+                var res = context.Users.Add(Map.Mapper.Map<User>(user));
                 context.SaveChanges();
-                return Mapper.Map<CoreEntities.User>(res);
+                return Map.Mapper.Map<CoreEntities.User>(res);
             }
         }
     }

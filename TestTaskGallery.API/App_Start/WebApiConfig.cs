@@ -33,6 +33,8 @@ namespace TestTaskGallery.API
 
             UnityConfig.RegisterComponents(container);
             config.DependencyResolver = new UnityDependencyResolver(container);
+
+            MapperConfig.RegisterMappings();
         }
     }
 }
