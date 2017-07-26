@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Practices.Unity;
 using TestTaskGallery.API.CompositionRoot;
 
 namespace TestTaskGallery.Tests
@@ -10,32 +11,33 @@ namespace TestTaskGallery.Tests
     public static class Ioc
     {
         #region should be replaced with real Ioc container
-        private static Dictionary<Type, Type> _iocCollection;
+
+        private static UnityContainer container;
+       
         static Ioc()
         {
-            //_iocCollection = TestTaskGalleryUnitDependencyResolverAPI.
-            _iocCollection = new Dictionary<Type, Type>()
-            {
-                //{ typeof(IUploadFileService), typeof(UploadFileService) }
-            };
-        }
+            container = new UnityContainer();
+            }
         #endregion should be replaced with real Ioc container
 
         public static T Get<T>() where T : class
         {
-            if (_iocCollection.ContainsKey(typeof(T)))
-            {
-                return Activator.CreateInstance(_iocCollection[typeof(T)]) as T;
+            return container.Resolve<T>();
             }
-
-            throw new NotImplementedException();
-        }
 
         public static void Add<T>(T obj)
         {
-            // this methos replace dependency in IOC container
+            container.RegisterInstance<T>(obj);
+           }
 
-            throw new NotImplementedException();
+        public static void Add<TFrom, TTo>() where TTo : TFrom 
+        {
+            container.RegisterType<TFrom,TTo>();
+           }
+
+        public static void CleanUp()
+        {
+            container = new UnityContainer();
         }
     }
 }

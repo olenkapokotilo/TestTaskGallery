@@ -15,5 +15,14 @@ namespace TestTaskGallery.Core.Services
         {
             return System.Web.Hosting.HostingEnvironment.MapPath(path);
         }
+
+        /// <summary>
+        /// Generates unique fileName to prevent errors while saving files with the same names from different users
+        /// </summary>
+        /// <param name="fileName"></param>
+        public string GenerateUniqueFileName(string fileName)
+        {
+            return Guid.NewGuid() + "_" + fileName;
+        }
     }
 }

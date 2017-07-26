@@ -32,7 +32,7 @@ namespace TestTaskGallery.DataAccess.Repositories
             }
         }
 
-        public object SaveFile(TestTaskGallery.Core.Entities.UploadFile file)
+        public object SaveFile(object file)
         {
             using (var context = new TestTaskGalleryContext())
             {
@@ -43,26 +43,15 @@ namespace TestTaskGallery.DataAccess.Repositories
             
         }
 
-        public object DeleteFile(object file)
+        public object DeleteFile(object fileName)
         {
             using (var context = new TestTaskGalleryContext())
             {
-                var el = context.UploadFiles.Where(f => f.Id == (int)file).SingleOrDefault();
+                var el = context.UploadFiles.SingleOrDefault(f => f.Name == (string)fileName);
                 context.Entry(el).State = EntityState.Deleted;
                 context.SaveChanges();
             }
             return "ok"; //TODO: return 
         }
-       public IEnumerable<TestTaskGallery.Core.Entities.User> Start()
-        {
-            using (var context = new TestTaskGalleryContext())
-            {
-                var users = context.Users.ToList();
-                var files = context.UploadFiles.ToList();
-                var result = Mapper.Map<IEnumerable<Core.Entities.User>>(users);
-                return result;
-            }
-
-        }
-    }
+      }
 }

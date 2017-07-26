@@ -29,9 +29,10 @@ namespace TestTaskGallery.Core.Services
             if (!_allowedExtentions.Any(httpPostedFile.FileName.Contains))
                 return new Result {Message = "Only picture allowed.", Status = "Error"};
 
-            var name = usesrId + "_" + Guid.NewGuid() + "_" + httpPostedFile.FileName;
+            var name = _fileSystemPathService.GenerateUniqueFileName(httpPostedFile.FileName);
+            
             var path = _fileSystemPathService.GetImageSavePath() + name;
-            var uploudfile = new UploadFile { Name = name, UserId = 1 };
+            var uploudfile = new UploadFile { Name = name, UserId = usesrId };
             var photo = (UploadFile)_uploadFileRepository.SaveFile(uploudfile);
             try
             {
@@ -39,7 +40,7 @@ namespace TestTaskGallery.Core.Services
             }
             catch (Exception e)
             {
-                _uploadFileRepository.DeleteFile(photo.Id);
+                _uploadFileRepository.DeleteFile(name);
                 return new Result { Message = "Error: ."+e.Message, Status = "Error"};
             }
            

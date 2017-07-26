@@ -51,7 +51,7 @@ namespace TestTaskGallery.API.Controllers
         public byte[] Get(int fileId)
         {
             var file = _uploadFileRepository.GetNameById(fileId);
-            var result = File.ReadAllBytes(System.Web.Hosting.HostingEnvironment.MapPath("~/App_Data") + file.Name);
+            var result = File.ReadAllBytes(System.Web.Hosting.HostingEnvironment.MapPath("~/App_Data") + file.Name);// TODO: ???
             return result;
         }
 
@@ -59,7 +59,7 @@ namespace TestTaskGallery.API.Controllers
         public Result Post()
         {
                 var httpPostedFile = HttpContext.Current.Request.Files["file"]; // ? "file" const
-                var result = _uploadFileService.SavePicture(new HttpPostedFileWrapper(httpPostedFile), 1);
+                var result = _uploadFileService.SavePicture(new HttpPostedFileWrapper(httpPostedFile), 1);//TODO: not static userId
             return result;
         }
            

@@ -9,5 +9,6 @@ namespace TestTaskGallery.Core.Services.Interfaces
     public interface IFileSystemPathService
     {
         string GetImageSavePath();
+        string GenerateUniqueFileName(string fileName);
     }
 }
