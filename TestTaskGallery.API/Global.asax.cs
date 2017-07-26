@@ -8,7 +8,6 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using AutoMapper;
 using Newtonsoft.Json;
-using TestTaskGallery.API.Mapper;
 
 namespace TestTaskGallery.API
 {
@@ -19,13 +18,15 @@ namespace TestTaskGallery.API
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            UnityConfig.RegisterComponents();
             MapperConfigurationAPI = MapperConfig.GetConfiguration();
             MapperConfigurationDA = DataAccess.Startup.MapperConfig.GetConfiguration();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            MapperConfigurationAPI.AssertConfigurationIsValid();
+            MapperConfigurationDA.AssertConfigurationIsValid();
         }
     }
 }

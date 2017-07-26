@@ -48,7 +48,7 @@
             var fd = new FormData();
             fd.append('userId', $scope.currentUser.Id);
             fd.append('file', $scope.file);            
-            $http.post('api/values', fd,
+            $http.post('api/addFile', fd,
             {
                 headers: { 'Content-Type': undefined },
                 transformRequest: angular.indentity
@@ -74,7 +74,7 @@
         }
 
         $scope.deletePhoto = function (id, index) {
-            $http.delete('api/deletePhoto', { params: { 'id': id } })
+            $http.delete('api/deletePhoto', { params: { 'fileName': id } })
                 .then(function (d) {
                     $scope.currentUser.UploadFiles.splice(index, 1);
                 $scope.productsData.find(function(el) { return el.Id == $scope.currentUser.Id; }).UploadFiles = $scope.currentUser.UploadFiles;
@@ -106,7 +106,7 @@
                 params: { 'fileId': userId }
             };
             var deferred = $q.defer();
-            $http.get('api/photos', config).
+            $http.get('api/files', config).
                 then(function success(response) {
                     deferred.resolve(response.data);
                 }, function error(response) {

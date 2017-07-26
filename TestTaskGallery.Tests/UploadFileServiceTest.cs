@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System.Web;
 using TestTaskGallery.Core.Repositories;
 using TestTaskGallery.Core.Services;
 using TestTaskGallery.Core.Services.Interfaces;

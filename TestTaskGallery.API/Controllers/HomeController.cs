@@ -14,9 +14,5 @@ namespace TestTaskGallery.API.Controllers
 
             return View();
         }
-        public ActionResult List(string id)
-        {
-            return View(id);
-        }
     }
 }

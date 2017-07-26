@@ -15,7 +15,6 @@ namespace TestTaskGallery.DataAccess.Models
         }
         public TestTaskGalleryContext() : base("name=TestTaskGalleryContext")
         {
-            //Database.SetInitializer<>(new TestTaskGalleryDBInitializer());
         }
         public DbSet<User> Users { get; set; }
         public DbSet<UploadFile> UploadFiles { get; set; }
