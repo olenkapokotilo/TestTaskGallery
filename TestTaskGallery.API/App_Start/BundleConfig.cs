@@ -20,6 +20,8 @@ namespace TestTaskGallery.API
                      "~/Scripts/angular.js",
                      "~/Scripts/angular-route.js",
                      "~/Scripts/moment.js",
+                     "~/Scripts/app/directives/*.js",
+                     "~/Scripts/app/filters/*.js",
                      "~/Scripts/app/services/*.js",
                      "~/Scripts/app/controllers/*.js",
                      "~/Scripts/app/app.js"));

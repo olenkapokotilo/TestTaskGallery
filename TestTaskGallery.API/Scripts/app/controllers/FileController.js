@@ -18,7 +18,7 @@ function FileController($scope, $http, $filter, $q, $routeParams, FileService, U
         var fd = new FormData();
         fd.append('file', $scope.file);            
         FileService.add($scope.currentUser.Id, fd).then(function (response) {
-            $scope.currentUser.UploadFiles.push(response.data.Photo);;
+            $scope.currentUser.UploadFiles.push(response.data.Photo);
         });
     }
 

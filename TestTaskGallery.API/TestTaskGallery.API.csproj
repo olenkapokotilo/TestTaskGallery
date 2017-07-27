@@ -276,6 +276,8 @@
     <Content Include="Scripts\app\app.js" />
     <Content Include="Scripts\app\controllers\FileController.js" />
     <Content Include="Scripts\app\controllers\UserController.js" />
+    <Content Include="Scripts\app\directives\fileInputDirective.js" />
+    <Content Include="Scripts\app\filters\startFromFilter.js" />
     <Content Include="Scripts\app\services\FileService.js" />
     <Content Include="Scripts\app\services\UserService.js" />
     <Content Include="Scripts\bootstrap.js" />

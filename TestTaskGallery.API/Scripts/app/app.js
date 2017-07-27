@@ -1,7 +1,7 @@
 ﻿(function () {
     "use strict";
 
-    var app = angular.module('app', ["ngRoute"])
+    var app = angular.module('app', ["ngRoute", "app.directives", "app.filters"])
         .controller('UserController', UserController)
         .controller('FileController', FileController)
         .service('UserService', UserService)
@@ -10,7 +10,7 @@
     app.config(function($routeProvider) {
         $routeProvider.when('/users',
         {
-            templateUrl: 'home/users', //todo : remove
+            templateUrl: 'home/users', 
             controller: 'UserController'
         });
         $routeProvider.when('/files/:userId',
@@ -18,25 +18,6 @@
             templateUrl: 'home/files',
             controller: 'FileController'
         });
+        $routeProvider.otherwise({ redirectTo: 'users' });
     });
- 
-app.directive('fileInput', ['$parse', function ($parse) {
-    return {
-        restrict: 'A',
-        link: function (scope, elm, attrs) {
-            elm.bind('change', function () {
-                $parse(attrs.fileInput)
-                    .assign(scope, elm[0].files[0]);
-                scope.$apply();
-            });
-        }
-    }
-}]);
-
-app.filter('startFrom', function () {
-    return function (input, start) {
-        start = +start; //parse to int
-        return input.slice(start);
-    }
-});
 })();

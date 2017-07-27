@@ -3,7 +3,7 @@
 function FileService($http, $q) {
     var service = this;
 
-    service.add = function (userId, fd) {
+    service.add = function (userId, fd) { //TODO: async
         return $http.post('api/users/' + userId + '/files', fd,
         {
             headers: { 'Content-Type': undefined },
