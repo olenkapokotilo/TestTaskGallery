@@ -9,10 +9,10 @@ namespace TestTaskGallery.Core.Repositories
 {
     public interface IUploadFileRepository
     {
-        UploadFile GetNameById(int id);
+        UploadFile Get(int id);
 
-        object SaveFile(object file);
+        UploadFile SaveFile(UploadFile file);
 
-        object DeleteFile(object file);
+        void DeleteFile(int id);
     }
 }

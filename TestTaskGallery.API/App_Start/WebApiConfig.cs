@@ -14,8 +14,7 @@ namespace TestTaskGallery.API
     {
         public static void Register(HttpConfiguration config)
         {
-            var container = new UnityContainer();
-            var json = config.Formatters.JsonFormatter;
+            var json = config.Formatters.JsonFormatter;//todo: rename var
             json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
             config.Formatters.Remove(config.Formatters.XmlFormatter);
           
@@ -31,6 +30,7 @@ namespace TestTaskGallery.API
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            var container = new UnityContainer();
             UnityConfig.RegisterComponents(container);
             config.DependencyResolver = new UnityDependencyResolver(container);
 

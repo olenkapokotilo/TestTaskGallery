@@ -11,7 +11,7 @@ namespace TestTaskGallery.DataAccess.Models
     {
         static TestTaskGalleryContext()
         {
-            Database.SetInitializer<TestTaskGalleryContext>(new TestTaskGalleryDBInitializer());
+            Database.SetInitializer(new TestTaskGalleryDbInitializer());
         }
         public TestTaskGalleryContext() : base("name=TestTaskGalleryContext")
         {

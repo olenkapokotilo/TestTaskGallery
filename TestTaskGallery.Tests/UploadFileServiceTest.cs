@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using TestTaskGallery.Core.Entities;
 using TestTaskGallery.Core.Repositories;
 using TestTaskGallery.Core.Services;
 using TestTaskGallery.Core.Services.Interfaces;
@@ -38,7 +39,7 @@ namespace TestTaskGallery.Tests
             postedFileMock.Setup(x => x.SaveAs(It.IsAny<string>()));
 
             var uploadFileRepositoryMock = new Mock<IUploadFileRepository>();
-            uploadFileRepositoryMock.Setup(x => x.SaveFile(It.IsAny<object>()));
+            uploadFileRepositoryMock.Setup(x => x.SaveFile(It.IsAny<UploadFile>()));
 
             var fileSystemPathServiceMock = new Mock<IFileSystemPathService>();
             fileSystemPathServiceMock.Setup(x => x.GetImageSavePath());
@@ -52,7 +53,7 @@ namespace TestTaskGallery.Tests
 
             // Assert
             Assert.AreEqual(result.Message, "Only picture allowed.");
-            uploadFileRepositoryMock.Verify(x => x.SaveFile(It.IsAny<object>()), Times.Never);
+            uploadFileRepositoryMock.Verify(x => x.SaveFile(It.IsAny<UploadFile>()), Times.Never);
             postedFileMock.Verify(x => x.SaveAs(It.IsAny<string>()), Times.Never);
         }
 
@@ -80,8 +81,8 @@ namespace TestTaskGallery.Tests
             fileSystemPathServiceMock.Setup(x => x.GetImageSavePath()).Returns(savePath);
 
             var uploadFileRepositoryMock = new Mock<IUploadFileRepository>();
-            uploadFileRepositoryMock.Setup(x => x.SaveFile(It.IsAny<object>()));
-            uploadFileRepositoryMock.Setup(x => x.DeleteFile(It.IsAny<object>()));
+            uploadFileRepositoryMock.Setup(x => x.SaveFile(It.IsAny<UploadFile>()));
+            uploadFileRepositoryMock.Setup(x => x.DeleteFile(It.IsAny<int>()));
 
             Ioc.Add(fileSystemPathServiceMock.Object);
             Ioc.Add(uploadFileRepositoryMock.Object);
@@ -99,8 +100,8 @@ namespace TestTaskGallery.Tests
             postedPictureFileMock2.Verify(x => x.SaveAs("testPath/picture1_unique.png"), Times.Once);
             postedPictureFileMock3.Verify(x => x.SaveAs("testPath/picture1_unique.gif"), Times.Once);
             fileSystemPathServiceMock.Verify(x => x.GetImageSavePath(), Times.Exactly(3));
-            uploadFileRepositoryMock.Verify(x => x.SaveFile(It.IsAny<object>()), Times.Exactly(3));
-            uploadFileRepositoryMock.Verify(x => x.DeleteFile(It.IsAny<object>()), Times.Never());
+            uploadFileRepositoryMock.Verify(x => x.SaveFile(It.IsAny<UploadFile>()), Times.Exactly(3));
+            uploadFileRepositoryMock.Verify(x => x.DeleteFile(It.IsAny<int>()), Times.Never());
         }
 
         [TestMethod]
@@ -118,8 +119,8 @@ namespace TestTaskGallery.Tests
             fileSystemPathServiceMock.Setup(x => x.GetImageSavePath()).Returns(savePath);
 
             var uploadFileRepositoryMock = new Mock<IUploadFileRepository>();
-            uploadFileRepositoryMock.Setup(x => x.SaveFile(It.IsAny<object>()));
-            uploadFileRepositoryMock.Setup(x => x.DeleteFile(It.IsAny<object>()));
+            uploadFileRepositoryMock.Setup(x => x.SaveFile(It.IsAny<UploadFile>()));
+            uploadFileRepositoryMock.Setup(x => x.DeleteFile(It.IsAny<int>()));
 
             Ioc.Add(fileSystemPathServiceMock.Object);
             Ioc.Add(uploadFileRepositoryMock.Object);
@@ -133,8 +134,8 @@ namespace TestTaskGallery.Tests
             Assert.AreEqual(result1.Status, "Error");
             postedPictureFileMock1.Verify(x => x.SaveAs("testPath/picture1_unique.jpg"), Times.Once);
             fileSystemPathServiceMock.Verify(x => x.GetImageSavePath(), Times.Once);
-            uploadFileRepositoryMock.Verify(x => x.SaveFile(It.IsAny<object>()), Times.Once);
-            uploadFileRepositoryMock.Verify(x => x.DeleteFile(It.IsAny<object>()), Times.Once());
+            uploadFileRepositoryMock.Verify(x => x.SaveFile(It.IsAny<UploadFile>()), Times.Once);
+            uploadFileRepositoryMock.Verify(x => x.DeleteFile(It.IsAny<int>()), Times.Once());
         }
     }
 }

@@ -13,7 +13,7 @@ namespace TestTaskGallery.Core.Services
 {
     public class UploadFileService : IUploadFileService
     {
-        private string[] _allowedExtentions;
+        private string[] _allowedExtentions; //todo: pass as ctor parameter
         private IUploadFileRepository _uploadFileRepository;
         private IFileSystemPathService _fileSystemPathService;
 
@@ -21,7 +21,7 @@ namespace TestTaskGallery.Core.Services
         {
             _uploadFileRepository = uploadFileRepository;
             _fileSystemPathService = fileSystemPathService;
-            _allowedExtentions = new string[] { ".png", ".gif", ".jpg"};
+            _allowedExtentions = new [] { ".png", ".gif", ".jpg"};
         }
 
         public Result SavePicture(HttpPostedFileBase httpPostedFile, int usesrId)
@@ -40,11 +40,11 @@ namespace TestTaskGallery.Core.Services
             }
             catch (Exception e)
             {
-                _uploadFileRepository.DeleteFile(name);
+                _uploadFileRepository.DeleteFile(photo.Id);
                 return new Result { Message = "Error: ."+e.Message, Status = "Error"};
             }
            
-            return new Result { Message = "Saved.", Status = "Success", Photo = (UploadFile)photo };
+            return new Result { Message = "Saved.", Status = "Success", Photo = photo };
         }
     }
 }

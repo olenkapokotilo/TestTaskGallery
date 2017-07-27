@@ -9,7 +9,7 @@ namespace TestTaskGallery.Core.Repositories
 {
     public interface IUserRepository
     {
-        IEnumerable<User> GetAllUsers();
+        IEnumerable<User> GetAll();
 
         User GetById(int id);
 

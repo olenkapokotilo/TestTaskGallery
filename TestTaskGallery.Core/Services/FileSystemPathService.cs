@@ -10,7 +10,7 @@ namespace TestTaskGallery.Core.Services
     public class FileSystemPathService : IFileSystemPathService
     {
 
-        const string path = "~/App_Data";
+        const string path = "~/App_Data"; //todo move to unity config, pass into constructor parameter
         public string GetImageSavePath()
         {
             return System.Web.Hosting.HostingEnvironment.MapPath(path);

@@ -9,7 +9,9 @@ namespace TestTaskGallery.API.Models
     {
         public int Id { get; set; }
 
+        //todo: add avalidation annotations
         public string Name { get; set; }
+        
         public DateTime BirthDate { get; set; }
 
         public ICollection<UploadFileModel> UploadFiles { get; set; }

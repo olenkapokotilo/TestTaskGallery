@@ -4,7 +4,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
 using TestTaskGallery.Core;
 using TestTaskGallery.Core.Repositories;
 using TestTaskGallery.DataAccess.Models;
@@ -13,35 +12,31 @@ namespace TestTaskGallery.DataAccess.Repositories
 {
     public class UploadFileRepository : IUploadFileRepository
     {
-        public Core.Entities.UploadFile GetNameById(int id)
+        private readonly DbContext _context; 
+        public UploadFileRepository(DbContext context)
         {
-            using (var context = new TestTaskGalleryContext())
-            {
-                var result = context.UploadFiles.SingleOrDefault(f => f.Id ==id);
-                return Map.Mapper.Map<Core.Entities.UploadFile>(result);
-            }
+            _context = context;
         }
 
-        public object SaveFile(object file)
+        public Core.Entities.UploadFile Get(int id)
         {
-            using (var context = new TestTaskGalleryContext())
-            {
-                var result = context.UploadFiles.Add(Map.Mapper.Map<UploadFile>(file));
-                context.SaveChanges();
-                return Map.Mapper.Map<Core.Entities.UploadFile>(result);
-            }
-            
+            var result = _context.Set<UploadFile>().SingleOrDefault(f => f.Id == id);
+            return Map.Mapper.Map<Core.Entities.UploadFile>(result);
         }
 
-        public object DeleteFile(object fileName)
+        public Core.Entities.UploadFile SaveFile(Core.Entities.UploadFile file)
         {
-            using (var context = new TestTaskGalleryContext())
-            {
-                var el = context.UploadFiles.SingleOrDefault(f => f.Name == fileName.ToString());
-                context.Entry(el).State = EntityState.Deleted;
-                context.SaveChanges();
-            }
-            return "ok"; //TODO: ???return 
+            var result = _context.Set<UploadFile>().Add(Map.Mapper.Map<UploadFile>(file));
+            _context.SaveChanges();
+            return Map.Mapper.Map<Core.Entities.UploadFile>(result);
         }
-      }
+
+        public void DeleteFile(int id)
+        {
+            var file = new UploadFile {Id = id};
+            _context.Set<UploadFile>().Attach(file);//TODO: check
+            _context.Set<UploadFile>().Remove(file);
+            _context.SaveChanges();
+        }
+    }
 }

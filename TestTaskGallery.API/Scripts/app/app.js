@@ -8,7 +8,7 @@
     app.config(function($routeProvider) {
         $routeProvider.when('/users',
         {
-            templateUrl: 'views/question.html',
+            templateUrl: 'views/question.html', //todo : remove
             controller: 'HomeController'
         });
         $routeProvider.when('/files',
@@ -19,9 +19,12 @@
     });
 
 
+    
+
  HomeController.$inject = ['$scope', '$http', '$q', '$filter', 'FileService'];
 
- function HomeController($scope, $http, $filter, $q, FileService) {
+    //todo: split into 2 controller & move to different files. Do it by small parts
+ function HomeController($scope, $http, $filter, $q, FileService) { //todo: useCamel case, only order make sens. Fix order!
         $scope.currentPage = 0;
         $scope.pageSize = 3;
         $scope.usersData = [];
@@ -44,7 +47,9 @@
             $scope.$apply();
         };
 
-        $scope.addUser = function() {
+        $scope.addUser = function () {
+
+            //todo: move to repository(service) (in the end) to hide api urls
             $http.post('api/addUser',  {
                 Name: $scope.Name,
                 BirthDate: $scope.BirthDate}
