@@ -11,7 +11,7 @@ using TestTaskGallery.Core.Repositories;
 
 namespace TestTaskGallery.API.Controllers
 {
-    //todo : routing
+    [RoutePrefix("api/users")]
     public class UsersController : ApiController
     {
         private readonly IUserRepository _userRepository;
@@ -19,19 +19,14 @@ namespace TestTaskGallery.API.Controllers
         {
             _userRepository = userRepository;
         }
-        [Route("api/users")]
-        [HttpGet]
-        public IEnumerable<Core.Entities.User> Get()
+        [Route("")]
+       public IEnumerable<UserModel> Get()
         {
-            var res = _userRepository.GetAll();
-            return res;
+            return  Map.Mapper.Map<IEnumerable<UserModel>>(_userRepository.GetAll());
         }
 
-        [Route("api/addUser")]
-        [HttpPost]
-
-        //todo: rename to Post or AddUser
-        public UserModel AddUserPost([FromBody]UserModel value) //todo: return Core model, Post WebModel
+        [Route("")]
+        public UserModel Post([FromBody]UserModel value)
         {
             var result = _userRepository.Add(Map.Mapper.Map<Core.Entities.User>(value));
             return Map.Mapper.Map<UserModel>(result);

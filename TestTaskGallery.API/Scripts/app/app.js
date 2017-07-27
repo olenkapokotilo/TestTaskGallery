@@ -50,7 +50,7 @@
         $scope.addUser = function () {
 
             //todo: move to repository(service) (in the end) to hide api urls
-            $http.post('api/addUser',  {
+            $http.post('api/users',  {
                 Name: $scope.Name,
                 BirthDate: $scope.BirthDate}
             ).then(function (d) {
@@ -67,7 +67,7 @@
             var fd = new FormData();
             fd.append('userId', $scope.currentUser.Id);
             fd.append('file', $scope.file);            
-            $http.post('api/addFile', fd,
+            $http.post('api/files', fd,
             {
                 headers: { 'Content-Type': undefined },
                 transformRequest: angular.indentity
@@ -90,7 +90,7 @@
            }
 
         $scope.deletePhoto = function (id, index) {
-            $http.delete('api/deletePhoto', { params: { 'fileName': id } })
+            $http.delete('api/files/' + id)//, { params: { 'fileName': id } })
                 .then(function (d) {
                     $scope.currentUser.UploadFiles.splice(index, 1);
                     $scope.usersData.find(function (el) { return el.Id == $scope.currentUser.Id; }).UploadFiles = $scope.currentUser.UploadFiles;
