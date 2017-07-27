@@ -26,7 +26,7 @@ namespace TestTaskGallery.DataAccess.Repositories
             return result;
         }
 
-        public CoreEntities.User GetById(int id)
+        public CoreEntities.User Get(int id)
         {
             var user = _context.Set<User>().SingleOrDefault(u => u.Id == id);
             var result = Map.Mapper.Map<CoreEntities.User>(user);

@@ -25,6 +25,12 @@ namespace TestTaskGallery.API.Controllers
             return  Map.Mapper.Map<IEnumerable<UserModel>>(_userRepository.GetAll());
         }
 
+        [Route("{id:int}")]
+        public UserModel Get(int id)
+        {
+            return Map.Mapper.Map<UserModel>(_userRepository.Get(id));
+        }
+
         [Route("")]
         public UserModel Post([FromBody]UserModel value)
         {

@@ -11,7 +11,7 @@ namespace TestTaskGallery.Core.Repositories
     {
         IEnumerable<User> GetAll();
 
-        User GetById(int id);
+        User Get(int id);
 
         User Add(User user);
     }
