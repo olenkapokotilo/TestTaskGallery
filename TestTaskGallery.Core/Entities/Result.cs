@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace TestTaskGallery.Core.Entities
 {
-
     //todo: rename to fileUploadResult
     public class Result
     {

@@ -13,10 +13,9 @@ namespace TestTaskGallery.API
         {
             container.RegisterType<Core.Repositories.IUploadFileRepository, DataAccess.Repositories.UploadFileRepository>();
             container.RegisterType<Core.Repositories.IUserRepository, DataAccess.Repositories.UserRepository>();
+            container.RegisterType<Core.Services.Interfaces.IFileSystemPathService, Core.Services.FileSystemPathService>(new InjectionConstructor("~/App_Data/"));
             container.RegisterType<Core.Services.Interfaces.IUploadFileService, Core.Services.UploadFileService>();
-            container.RegisterType<DbContext, TestTaskGalleryContext>(new PerThreadLifetimeManager(), new InjectionConstructor());
-            //todo: use injection construcor
-            container.RegisterType<Core.Services.Interfaces.IFileSystemPathService, Core.Services.FileSystemPathService>();
+            container.RegisterType<DbContext, TestTaskGalleryContext>(new PerThreadLifetimeManager());
         }
     }
 }

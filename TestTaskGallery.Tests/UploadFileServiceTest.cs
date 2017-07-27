@@ -119,7 +119,7 @@ namespace TestTaskGallery.Tests
             fileSystemPathServiceMock.Setup(x => x.GetImageSavePath()).Returns(savePath);
 
             var uploadFileRepositoryMock = new Mock<IUploadFileRepository>();
-            uploadFileRepositoryMock.Setup(x => x.SaveFile(It.IsAny<UploadFile>()));
+            uploadFileRepositoryMock.Setup(x => x.SaveFile(It.IsAny<UploadFile>())); //TODO: Return
             uploadFileRepositoryMock.Setup(x => x.DeleteFile(It.IsAny<int>()));
 
             Ioc.Add(fileSystemPathServiceMock.Object);

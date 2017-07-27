@@ -12,5 +12,6 @@ namespace TestTaskGallery.Core.Services.Interfaces
     public interface IUploadFileService
     {
         Result SavePicture(HttpPostedFileBase file, int userId);
+        Result DeletePicture(int id);
     }
 }

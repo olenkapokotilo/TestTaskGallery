@@ -14,8 +14,8 @@ namespace TestTaskGallery.API
     {
         public static void Register(HttpConfiguration config)
         {
-            var json = config.Formatters.JsonFormatter;//todo: rename var
-            json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+            var jsonFormatter = config.Formatters.JsonFormatter;
+            jsonFormatter.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
             config.Formatters.Remove(config.Formatters.XmlFormatter);
           
             config.SuppressDefaultHostAuthentication();

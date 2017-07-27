@@ -13,15 +13,15 @@ namespace TestTaskGallery.Core.Services
 {
     public class UploadFileService : IUploadFileService
     {
-        private string[] _allowedExtentions; //todo: pass as ctor parameter
-        private IUploadFileRepository _uploadFileRepository;
-        private IFileSystemPathService _fileSystemPathService;
+        private readonly string[] _allowedExtentions; //todo: pass as ctor parameter
+        private readonly IUploadFileRepository _uploadFileRepository;
+        private readonly IFileSystemPathService _fileSystemPathService;
 
         public UploadFileService(IUploadFileRepository uploadFileRepository, IFileSystemPathService fileSystemPathService)
         {
             _uploadFileRepository = uploadFileRepository;
             _fileSystemPathService = fileSystemPathService;
-            _allowedExtentions = new [] { ".png", ".gif", ".jpg"};
+            _allowedExtentions = new[] { ".png", ".gif", ".jpg" };
         }
 
         public Result SavePicture(HttpPostedFileBase httpPostedFile, int usesrId)
@@ -33,7 +33,7 @@ namespace TestTaskGallery.Core.Services
             
             var path = _fileSystemPathService.GetImageSavePath() + name;
             var uploudfile = new UploadFile { Name = name, UserId = usesrId };
-            var photo = (UploadFile)_uploadFileRepository.SaveFile(uploudfile);
+            var photo = _uploadFileRepository.SaveFile(uploudfile);
             try
             {
                 httpPostedFile.SaveAs(path); 
@@ -45,6 +45,17 @@ namespace TestTaskGallery.Core.Services
             }
            
             return new Result { Message = "Saved.", Status = "Success", Photo = photo };
+        }
+
+        public Result DeletePicture(int id)
+        {
+            var file = _uploadFileRepository.Get(id);
+            _uploadFileRepository.DeleteFile(id);
+            var path = _fileSystemPathService.GetImageSavePath() + file.Name;
+            
+            File.Delete(path);
+            
+            return new Result { Message = "Deleted.", Status = "Success"};
         }
     }
 }

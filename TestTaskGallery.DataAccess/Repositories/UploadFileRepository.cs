@@ -33,8 +33,7 @@ namespace TestTaskGallery.DataAccess.Repositories
 
         public void DeleteFile(int id)
         {
-            var file = new UploadFile {Id = id};
-            _context.Set<UploadFile>().Attach(file);//TODO: check
+            var file = _context.Set<UploadFile>().SingleOrDefault(f => f.Id == id);
             _context.Set<UploadFile>().Remove(file);
             _context.SaveChanges();
         }

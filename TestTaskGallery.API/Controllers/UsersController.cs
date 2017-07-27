@@ -28,8 +28,12 @@ namespace TestTaskGallery.API.Controllers
         [Route("")]
         public UserModel Post([FromBody]UserModel value)
         {
-            var result = _userRepository.Add(Map.Mapper.Map<Core.Entities.User>(value));
-            return Map.Mapper.Map<UserModel>(result);
+            //if (ModelState.IsValid)
+            //{
+                var result = _userRepository.Add(Map.Mapper.Map<Core.Entities.User>(value));
+                return Map.Mapper.Map<UserModel>(result);
+            //}
+            //return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
         }
     }
 }

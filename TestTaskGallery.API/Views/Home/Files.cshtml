@@ -9,7 +9,7 @@
         </form>
     </div>
     <div class="col-lg-3 " ng-repeat="photo in currentUser.UploadFiles">
-        <img class="img-thumbnail" ng-src="data:image/*;base64,{{photo.bytes}}">
+        <img class="img-thumbnail" ng-src="api/users/{{photo.UserId}}/files/{{photo.Id}}" /> 
 
         <button type="button" class="close" aria-label="Close" ng-click="deletePhoto(photo.Id, $index)"><span aria-hidden="true">&times;</span></button>
     </div>

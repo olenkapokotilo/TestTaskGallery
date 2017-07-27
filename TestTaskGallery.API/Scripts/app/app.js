@@ -65,32 +65,22 @@
 
         $scope.upload = function () {
             var fd = new FormData();
-            fd.append('userId', $scope.currentUser.Id);
             fd.append('file', $scope.file);            
-            $http.post('api/files', fd,
+            $http.post('api/users/' + $scope.currentUser.Id + '/files', fd,
             {
                 headers: { 'Content-Type': undefined },
                 transformRequest: angular.indentity
             }).then(function (d) {
-                var newPhoto = d.data.Photo;
-                FileService.asyncGePhotos(d.data.Photo.Id).then(function (d) {
-                    newPhoto.bytes = d;
-                    $scope.currentUser.UploadFiles.push(newPhoto);
-                });
-                });
+                $scope.currentUser.UploadFiles.push(d.data.Photo);;
+            });
         }
 
         $scope.uploadUserFiles = function(id) {
             $scope.currentUser = $scope.usersData.find(function (el) { return el.Id == id; });
-           angular.forEach($scope.currentUser.UploadFiles, function (file) {
-                PhotoService.asyncGePhotos(file.Id).then(function (d) {
-                    $scope.currentUser.UploadFiles.find(function (el) { return el.Id == id; }).bytes = d;
-                });
-            });
            }
 
         $scope.deletePhoto = function (id, index) {
-            $http.delete('api/files/' + id)//, { params: { 'fileName': id } })
+            $http.delete('api/users/' + $scope.currentUser.Id + '/files/' + id)
                 .then(function (d) {
                     $scope.currentUser.UploadFiles.splice(index, 1);
                     $scope.usersData.find(function (el) { return el.Id == $scope.currentUser.Id; }).UploadFiles = $scope.currentUser.UploadFiles;
@@ -117,21 +107,7 @@
             return deferred.promise;
         }
 
-        service.asyncGePhotos = function (userId) {
-            var config = {
-                params: { 'fileId': userId }
-            };
-            var deferred = $q.defer();
-            $http.get('api/files', config).
-                then(function success(response) {
-                    deferred.resolve(response.data);
-                }, function error(response) {
-                    deferred.reject(response.status);
-                });
-
-            return deferred.promise;
         }
-    }
 
 app.directive('fileInput', ['$parse', function ($parse) {
     return {
