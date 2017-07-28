@@ -44,15 +44,15 @@ namespace TestTaskGallery.API.Controllers
         [Route("")]
         public Result Post(int userId)
         {
-            var httpPostedFile = HttpContext.Current.Request.Files["file"]; // ? "file" const
-            var result = _uploadFileService.SavePicture(new HttpPostedFileWrapper(httpPostedFile), userId);//TODO: if status error
+            var httpPostedFile = HttpContext.Current.Request.Files["file"];
+            var result = _uploadFileService.SavePicture(new HttpPostedFileWrapper(httpPostedFile), userId);
             return result;
         }
 
         [Route("{id:int}")]
         public void Delete(int id)
         {
-            _uploadFileService.DeletePicture(id);//TODO: return Result
+            _uploadFileService.DeletePicture(id);
         }
     }
 }
