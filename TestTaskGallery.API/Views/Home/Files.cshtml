@@ -9,8 +9,10 @@
                 <button ng-click="upload()">Add</button>
             </form>
         </div>
-        <div class="col-lg-3 " ng-repeat="file in currentUser.UploadFiles">
-            <img class="img-thumbnail" ng-src="api/users/{{file.UserId}}/files/{{file.Id}}" />
+        <div class="col-lg-3 " ng-repeat="file in currentUser.UploadFiles" >
+            <a ng-click="download(file.Id, file.Name)" id="btn{{file.Id}}">
+                <img id="file{{file.Id}}" class="img-thumbnail" ng-src="api/users/{{file.UserId}}/files/{{file.Id}}" />
+            </a>
             <button type="button" class="close" aria-label="Close" ng-click="deleteFile(file.Id, $index)"><span aria-hidden="true">&times;</span></button>
         </div>
     </div>

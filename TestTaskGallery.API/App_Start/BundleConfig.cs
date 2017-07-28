@@ -19,6 +19,9 @@ namespace TestTaskGallery.API
             bundles.Add(new ScriptBundle("~/bundles/angularjs").Include(
                      "~/Scripts/angular.js",
                      "~/Scripts/angular-route.js",
+                     "~/Scripts/app/lib/angular-file-saver.bundle.js",
+                     "~/Scripts/app/lib/FileSaver.js",
+                     "~/Scripts/app/lib/Blob.js",
                      "~/Scripts/moment.js",
                      "~/Scripts/app/directives/*.js",
                      "~/Scripts/app/filters/*.js",
